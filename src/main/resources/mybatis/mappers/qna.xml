@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="qna">
+ 	<insert id="insert" parameterType="qnavo">
+ 		<![CDATA[
+ 			 insert into
+ 			 qna (
+ 			 	 title,
+ 			 	 content,
+ 			 	 reg_date,
+ 			 	 user_no,
+ 			 	 chk )
+ 			 values (
+ 			 	 #{title},
+ 			 	 #{content},
+ 			 	 CURRENT_TIMESTAMP,
+ 			 	 #{userNo},
+ 			 	 #{chk} )
+ 		]]>
+ 	</insert>
+ 	
+ 	<select id="getList" parameterType="map" resultType="qnavo">
+ 		<choose>
+ 			<when test="keyword != null and keyword != ''">
+ 				<![CDATA[
+ 					 select y.*
+ 					 from ( select x.no,
+ 					 			   x.title,
+ 					 			   x.reg_date as regDate,
+ 					 			   x.name as userName,
+ 					 			   x.user_no as userNo,
+ 					 			   x.chk
+ 					 		 from  ( select q.no,
+ 					 		 			    q.title,
+ 					 		 			    q.reg_date,
+ 					 		 			    u.name,
+ 					 		 			    q.user_no,
+ 					 		 			    q.chk
+ 					 		 		 from   qna q,
+ 					 		 		 	    users u
+ 					 		 		 where  q.user_no = u.no
+ 					 		 		   and  (q.title like '%${keyword}%'
+ 					 		 		   		 or q.content like '%${keyword}%')
+ 					 		 		 order by no asc ) x ) y
+ 				]]>
+ 			</when>
+ 			<otherwise>
+ 				<![CDATA[
+ 					 select y.*
+ 					 from ( select x.no,
+ 					 			   x.title,
+ 					 			   x.reg_date as regDate,
+ 					 			   x.name as userName,
+ 					 			   x.user_no as userNo,
+ 					 			   x.chk
+ 					 		 from  ( select q.no,
+ 					 		 			    q.title,
+ 					 		 			    q.reg_date,
+ 					 		 			    u.name,
+ 					 		 			    q.user_no,
+ 					 		 			    q.chk
+ 					 		 		 from   qna q,
+ 					 		 		 	    users u
+ 					 		 		 where  q.user_no = u.no
+ 					 		 		 order by no asc ) x ) y
+ 				]]>
+ 			</otherwise>
+ 		</choose>
+ 	</select>
+ 	
+ 	<select id="getByNo" parameterType="long" resultType="qnavo">
+ 		<![CDATA[
+ 			select no,
+ 				   title,
+ 				   content,
+ 				   user_no as userNo,
+ 				   chk
+ 			 from  qna
+ 			 where no=#{no}
+ 		]]>
+ 	</select>
+ 	
+ 	<update id="update" parameterType="qnavo">
+ 		<![CDATA[
+ 			update qna
+ 			 set   title=#{title},
+ 			 	   content=#{content},
+ 			 	   chk=#{chk}
+ 			 where no=#{no}
+ 			 and user_no=#{userNo}
+ 		]]>
+ 	</update>
+ 	
+ 	<delete id="delete" parameterType="Long">
+ 		<![CDATA[
+ 			 delete
+ 			 from qna
+ 			 where no=#{no}
+ 		]]>
+ 	</delete>
+ </mapper>

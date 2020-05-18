@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+	<typeAliases>
+		<typeAlias alias="uservo" type="com.bit.myshop.vo.UserVo"/>
+		<typeAlias alias="qnavo" type="com.bit.myshop.vo.QnaVo"/>
+		<typeAlias alias="productvo" type="com.bit.myshop.vo.ProductVo"/>
+		<typeAlias alias="ordervo" type="com.bit.myshop.vo.OrderVo"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mybatis/mappers/user.xml"/>
+		<mapper resource="mybatis/mappers/qna.xml"/>
+		<mapper resource="mybatis/mappers/product.xml"/>
+		<mapper resource="mybatis/mappers/order.xml"/>
+	</mappers>
+</configuration>

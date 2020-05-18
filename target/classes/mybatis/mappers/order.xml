@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="order">
+ 	<select id="getAllOrderList" parameterType="map" resultType="ordervo">
+ 		 select  no,
+ 		 	 	 pname,
+ 		 	 	 price,
+ 		 	 	 reg_date,
+ 		 	 	 user_name as userName
+ 		 from  orders
+ 		 order by no asc
+ 	</select>
+ 	
+ 	<select id="getOrderList" parameterType="map" resultType="ordervo">
+ 		 select *
+ 		 from orders
+ 		 where user_no = ( select no
+ 		 					 from users
+ 		 				   where no=#{no} )
+ 	</select>
+ 	
+ 	<insert id="order" parameterType="ordervo">
+ 		 insert into
+ 		 orders (
+ 		 		 pname,
+ 		 		 price,
+ 		 		 reg_date,
+ 		 		 user_no,
+ 		 		 user_name )
+ 		 values (
+ 		 		 #{pname},
+ 		 		 #{price},
+ 		 		 CURRENT_TIMESTAMP,
+ 		 		 #{userNo},
+ 		 		 #{userName} )
+ 	</insert>
+ </mapper>
