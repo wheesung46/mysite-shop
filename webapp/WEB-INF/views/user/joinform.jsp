@@ -76,7 +76,7 @@
 						<form:errors path="name"/>
 					</p>
 					
-					<label class="block-label" for="email">메일</label>
+					<label class="block-label" for="email">이메일</label>
 					<form:input path="email" />
 					<!-- 사용가능한 이메일이라면 이미지 보여주기 -->
 					<img id="img-chkemail" align="top" style="width:16px; display:none"
